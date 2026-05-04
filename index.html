@@ -7,7 +7,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#000;display:flex;align-items:flex-start;justify-content:center;min-height:100vh;font-family:'Rajdhani',sans-serif;overflow:hidden;user-select:none;}
+body{background:#000000;display:flex;align-items:flex-start;justify-content:center;min-height:100vh;font-family:'Rajdhani',sans-serif;overflow:hidden;user-select:none;}
 #gameWrapper{position:relative;width:480px;height:700px;transform-origin:top center;}
 canvas{display:block;border:2px solid #00ffff;box-shadow:0 0 30px #00ffff55;border-radius:4px;}
 #ui{position:absolute;top:0;left:0;width:100%;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;pointer-events:none;z-index:10;}
@@ -15,7 +15,7 @@ canvas{display:block;border:2px solid #00ffff;box-shadow:0 0 30px #00ffff55;bord
 .stat{display:flex;flex-direction:column;align-items:center;}
 .stat-label{font-size:9px;color:#00ffff99;letter-spacing:2px;text-transform:uppercase;font-family:'Orbitron',sans-serif;}
 .stat-value{font-size:18px;color:#fff;font-family:'Orbitron',sans-serif;font-weight:700;text-shadow:0 0 10px #00ffff;}
-.p2v{color:#ff8800!important;text-shadow:0 0 10px #ff8800!important;}
+.p2v{color:#ff9500!important;text-shadow:0 0 10px #ff8800!important;}
 #healthBar{position:absolute;bottom:42px;left:14px;right:14px;height:8px;background:#ffffff22;border-radius:4px;overflow:hidden;}
 #healthFill{height:100%;background:linear-gradient(90deg,#ff4466,#ff0044);border-radius:4px;transition:width 0.2s;box-shadow:0 0 8px #ff0044;}
 #healthBarP2{position:absolute;top:42px;left:14px;right:14px;height:8px;background:#ffffff22;border-radius:4px;overflow:hidden;display:none;}
@@ -74,49 +74,49 @@ canvas{display:block;border:2px solid #00ffff;box-shadow:0 0 30px #00ffff55;bord
     <div class="stat"><div class="stat-label">Score</div><div class="stat-value" id="scoreVal">0</div></div>
     <div class="stat"><div class="stat-label">Level</div><div class="stat-value" id="levelVal">1</div></div>
     <div class="stat"><div class="stat-label">Coins</div><div class="stat-value" id="coinsVal">0</div></div>
-    <div class="stat"><div class="stat-label">Lives</div><div class="stat-value" id="livesVal">â¤ï¸â¤ï¸â¤ï¸</div></div>
+    <div class="stat"><div class="stat-label">Lives</div><div class="stat-value" id="livesVal">♥♥♥</div></div>
   </div>
   <div id="uiP2">
-    <div class="stat"><div class="stat-label" style="color:#ff880099">P2 Lives</div><div class="stat-value p2v" id="livesValP2">â¤ï¸â¤ï¸â¤ï¸</div></div>
+    <div class="stat"><div class="stat-label" style="color:#ff880099">P2 Lives</div><div class="stat-value p2v" id="livesValP2">♥♥♥</div></div>
     <div class="stat"><div class="stat-label" style="color:#ff880099">P2 Score</div><div class="stat-value p2v" id="scoreValP2">0</div></div>
   </div>
-  <div id="bossLabel">âš  BOSS</div>
+  <div id="bossLabel">! BOSS</div>
   <div id="bossBar"><div id="bossFill"></div></div>
   <div id="healthBar"><div id="healthFill" style="width:100%"></div></div>
   <div id="healthBarP2"><div id="healthFillP2" style="width:100%"></div></div>
-  <button id="pauseBtn" onclick="togglePause()">â¸ PAUSE</button>
+  <button id="pauseBtn" onclick="togglePause()">|| PAUSE</button>
   <div id="onscreenControls">
     <div class="dpad">
-      <div class="dpad-btn" id="dUp"    onpointerdown="keys['ArrowUp']=true"    onpointerup="keys['ArrowUp']=false"    onpointerleave="keys['ArrowUp']=false">â–²</div>
-      <div class="dpad-btn" id="dDown"  onpointerdown="keys['ArrowDown']=true"  onpointerup="keys['ArrowDown']=false"  onpointerleave="keys['ArrowDown']=false">â–¼</div>
-      <div class="dpad-btn" id="dLeft"  onpointerdown="keys['ArrowLeft']=true"  onpointerup="keys['ArrowLeft']=false"  onpointerleave="keys['ArrowLeft']=false">â—€</div>
-      <div class="dpad-btn" id="dRight" onpointerdown="keys['ArrowRight']=true" onpointerup="keys['ArrowRight']=false" onpointerleave="keys['ArrowRight']=false">â–¶</div>
+      <div class="dpad-btn" id="dUp"    onpointerdown="keys['ArrowUp']=true"    onpointerup="keys['ArrowUp']=false"    onpointerleave="keys['ArrowUp']=false">▲</div>
+      <div class="dpad-btn" id="dDown"  onpointerdown="keys['ArrowDown']=true"  onpointerup="keys['ArrowDown']=false"  onpointerleave="keys['ArrowDown']=false">▼</div>
+      <div class="dpad-btn" id="dLeft"  onpointerdown="keys['ArrowLeft']=true"  onpointerup="keys['ArrowLeft']=false"  onpointerleave="keys['ArrowLeft']=false">&#9668;</div>
+      <div class="dpad-btn" id="dRight" onpointerdown="keys['ArrowRight']=true" onpointerup="keys['ArrowRight']=false" onpointerleave="keys['ArrowRight']=false">►</div>
     </div>
-    <div id="fireBtn" onpointerdown="keys[' ']=true" onpointerup="keys[' ']=false" onpointerleave="keys[' ']=false">ðŸ”¥</div>
+    <div id="fireBtn" onpointerdown="keys[' ']=true" onpointerup="keys[' ']=false" onpointerleave="keys[' ']=false">FIRE</div>
   </div>
   <div id="onscreenControlsP2">
     <div class="dpad">
-      <div class="dpad-btn p2b" id="dUp2"    onpointerdown="p2keys['w']=true"    onpointerup="p2keys['w']=false"    onpointerleave="p2keys['w']=false">â–²</div>
-      <div class="dpad-btn p2b" id="dDown2"  onpointerdown="p2keys['s']=true"    onpointerup="p2keys['s']=false"    onpointerleave="p2keys['s']=false">â–¼</div>
-      <div class="dpad-btn p2b" id="dLeft2"  onpointerdown="p2keys['a']=true"    onpointerup="p2keys['a']=false"    onpointerleave="p2keys['a']=false">â—€</div>
-      <div class="dpad-btn p2b" id="dRight2" onpointerdown="p2keys['d']=true"    onpointerup="p2keys['d']=false"    onpointerleave="p2keys['d']=false">â–¶</div>
+      <div class="dpad-btn p2b" id="dUp2"    onpointerdown="p2keys['w']=true"    onpointerup="p2keys['w']=false"    onpointerleave="p2keys['w']=false">▲</div>
+      <div class="dpad-btn p2b" id="dDown2"  onpointerdown="p2keys['s']=true"    onpointerup="p2keys['s']=false"    onpointerleave="p2keys['s']=false">▼</div>
+      <div class="dpad-btn p2b" id="dLeft2"  onpointerdown="p2keys['a']=true"    onpointerup="p2keys['a']=false"    onpointerleave="p2keys['a']=false">&#9668;</div>
+      <div class="dpad-btn p2b" id="dRight2" onpointerdown="p2keys['d']=true"    onpointerup="p2keys['d']=false"    onpointerleave="p2keys['d']=false">►</div>
     </div>
-    <div id="fireBtn2" onpointerdown="p2keys['f']=true" onpointerup="p2keys['f']=false" onpointerleave="p2keys['f']=false">ðŸ”¥</div>
+    <div id="fireBtn2" onpointerdown="p2keys['f']=true" onpointerup="p2keys['f']=false" onpointerleave="p2keys['f']=false">FIRE</div>
   </div>
   <div id="pauseOverlay">
-    <h2>â¸ PAUSED</h2>
-    <button class="pbtn" onclick="togglePause()">â–¶ RESUME</button>
-    <button class="pbtn red" onclick="goMenu()">ðŸ  MENU</button>
-    <div class="clrRow" id="pColorRow"><label>ðŸª™ COIN COLOR</label></div>
+    <h2>|| PAUSED</h2>
+    <button class="pbtn" onclick="togglePause()">► RESUME</button>
+    <button class="pbtn red" onclick="goMenu()">MAIN MENU</button>
+    <div class="clrRow" id="pColorRow"><label>COIN COLOR</label></div>
   </div>
   <div id="overlay">
     <h1>NOVA STRIKE</h1>
     <p>Destroy enemies. Survive the boss. Rule the stars.</p>
-    <div class="sub">Arrow Keys Â· Space to shoot</div>
-    <button class="startBtn" onclick="startGame('solo')">â–¶ SOLO PLAY</button>
-    <button class="startBtn vsBtn" onclick="startGame('versus')">ðŸ‘¥ VS FRIEND</button>
-    <div class="clrRow" id="mColorRow" style="margin-top:10px"><label>ðŸª™ COIN COLOR</label></div>
-    <div id="ctrlHint">ðŸ›¡ Blue=Shield | âš¡ Yellow=Rapid | ðŸ’£ Red=Triple<br>VS: P1=Arrows+Space | P2=WASD+F</div>
+    <div class="sub">Arrow Keys · Space to shoot</div>
+    <button class="startBtn" onclick="startGame('solo')">► SOLO PLAY</button>
+    <button class="startBtn vsBtn" onclick="startGame('versus')">VS FRIEND</button>
+    <div class="clrRow" id="mColorRow" style="margin-top:10px"><label>COIN COLOR</label></div>
+    <div id="ctrlHint">[S] Blue=Shield | ZAP Yellow=Rapid | [T] Red=Triple<br>VS: P1=Arrows+Space | P2=WASD+F</div>
   </div>
 </div>
 <script>
@@ -138,7 +138,7 @@ function showFlash(msg){
 function buyColor(name,hex){
   if(unlockedColors.has(name)){activeCoin=name;setCoinColor(hex);buildColorRows();return;}
   const price=COLOR_PRICES[name];
-  if(totalCoins>=price){totalCoins-=price;unlockedColors.add(name);activeCoin=name;setCoinColor(hex);saveProgress();buildColorRows();showFlash('ðŸŽ¨ '+name.toUpperCase()+' UNLOCKED!');}
+  if(totalCoins>=price){totalCoins-=price;unlockedColors.add(name);activeCoin=name;setCoinColor(hex);saveProgress();buildColorRows();showFlash(' '+name.toUpperCase()+' UNLOCKED!');}
   else showFlash('Need '+(price-totalCoins)+' more coins! ('+price+'c)');
 }
 
@@ -148,7 +148,7 @@ function buildColorRows(){
     const lbl=row.querySelector('label'); row.innerHTML=''; if(lbl)row.appendChild(lbl);
     const bank=document.createElement('div');
     bank.style.cssText='width:100%;text-align:center;font-family:Orbitron,sans-serif;font-size:10px;color:#ffd700;margin-bottom:5px;';
-    bank.textContent='ðŸ¦ Bank: '+totalCoins+' coins'; row.appendChild(bank);
+    bank.textContent='Bank: '+totalCoins+' coins'; row.appendChild(bank);
     Object.entries(COLORS).forEach(([name,hex])=>{
       const locked=!unlockedColors.has(name);
       const wrap=document.createElement('div');
@@ -161,7 +161,7 @@ function buildColorRows(){
       d.onclick=()=>buyColor(name,hex);
       const tag=document.createElement('div');
       tag.style.cssText='font-size:7px;color:'+(locked?'#ffd70099':'#00ffff66')+';font-family:Orbitron,sans-serif;';
-      tag.textContent=locked?COLOR_PRICES[name]+'c':'âœ“';
+      tag.textContent=locked?COLOR_PRICES[name]+'c':'OK';
       wrap.appendChild(d); wrap.appendChild(tag); row.appendChild(wrap);
     });
   });
@@ -257,7 +257,7 @@ function togglePause(){
   if(!gameRunning)return;
   paused=!paused;
   pauseOverlay.style.display=paused?'flex':'none';
-  pauseBtn.textContent=paused?'â–¶ RESUME':'â¸ PAUSE';
+  pauseBtn.textContent=paused?'► RESUME':'|| PAUSE';
   if(!paused)loop();
 }
 function goMenu(){
@@ -270,11 +270,11 @@ function goMenu(){
   overlay.innerHTML=`
     <h1>NOVA STRIKE</h1>
     <p style="color:#aaa;font-size:14px;margin-bottom:4px">Destroy enemies. Survive the boss.</p>
-    <div class="sub">Arrow Keys Â· Space to shoot</div>
-    <button class="startBtn" onclick="startGame('solo')">â–¶ SOLO PLAY</button>
-    <button class="startBtn vsBtn" onclick="startGame('versus')">ðŸ‘¥ VS FRIEND</button>
-    <div class="clrRow" id="mColorRow" style="margin-top:10px"><label>ðŸª™ COIN COLOR SHOP</label></div>
-    <div id="ctrlHint">ðŸ›¡ Blue=Shield | âš¡ Yellow=Rapid | ðŸ’£ Red=Triple<br>VS: P1=Arrows+Space | P2=WASD+F</div>
+    <div class="sub">Arrow Keys · Space to shoot</div>
+    <button class="startBtn" onclick="startGame('solo')">► SOLO PLAY</button>
+    <button class="startBtn vsBtn" onclick="startGame('versus')">VS FRIEND</button>
+    <div class="clrRow" id="mColorRow" style="margin-top:10px"><label>COIN COLOR SHOP</label></div>
+    <div id="ctrlHint">[S] Blue=Shield | ZAP Yellow=Rapid | [T] Red=Triple<br>VS: P1=Arrows+Space | P2=WASD+F</div>
   `;
   overlay.style.display='flex';
   buildColorRows();
@@ -283,7 +283,7 @@ function goMenu(){
 function startGame(mode){
   gameMode=mode||'solo';
   stopMenuAnim();
-  overlay.style.display='none';pauseBtn.style.display='block';pauseBtn.textContent='â¸ PAUSE';
+  overlay.style.display='none';pauseBtn.style.display='block';pauseBtn.textContent='|| PAUSE';
   document.getElementById('onscreenControls').style.display='flex';
   gameRunning=true;paused=false;
   score=0;score2=0;level=1;lives=3;lives2=3;coins=0;scoreForNext=100;
@@ -484,7 +484,7 @@ function draw(){
     ctx.font='bold 34px Orbitron,sans-serif';ctx.fillStyle='#ffd700';ctx.shadowBlur=30;ctx.shadowColor='#ffd700';
     ctx.fillText(levelUpMsg.text,W/2,H/2-20);
     ctx.font='16px Orbitron,sans-serif';ctx.fillStyle=coinColor;ctx.shadowColor=coinColor;
-    ctx.fillText('+'+levelUpMsg.coins+' ðŸª™ COINS',W/2,H/2+18);
+    ctx.fillText('+'+levelUpMsg.coins+' COIN COINS',W/2,H/2+18);
     ctx.restore();
   }
 }
@@ -541,7 +541,7 @@ function spawnBoss(){
 function updateBossBar(){bossFill.style.width=(boss.hp/bossMaxHealth*100)+'%';}
 function hideBossBar(){bossBar.style.display='none';bossLabel.style.display='none';}
 function spawnPowerup(x,y){
-  const types=[{type:'shield',color:'#00aaff',icon:'ðŸ›¡'},{type:'rapid',color:'#ffff00',icon:'âš¡'},{type:'triple',color:'#ff6600',icon:'ðŸ’£'},{type:'heal',color:'#44ff88',icon:'ðŸ’Š'}];
+  const types=[{type:'shield',color:'#00aaff',icon:'[S]'},{type:'rapid',color:'#ffff00',icon:'ZAP'},{type:'triple',color:'#ff6600',icon:'[T]'},{type:'heal',color:'#44ff88',icon:'[+]'}];
   const t=types[Math.floor(Math.random()*types.length)];
   powerups.push({x,y,...t});
 }
@@ -551,8 +551,8 @@ function spawnParticles(x,y,color,n){
 function overlap(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;}
 function updateHealthBar(){healthFill.style.width=(player.hp/player.maxHp*100)+'%';}
 function updateHealthBarP2(){if(player2)healthFillP2.style.width=(player2.hp/player2.maxHp*100)+'%';}
-function updateUI(){scoreEl.textContent=score;levelEl.textContent=level;coinsEl.textContent=coins;livesEl.textContent='â¤ï¸'.repeat(lives);}
-function updateP2UI(){scoreValP2.textContent=score2;livesValP2.textContent='â¤ï¸'.repeat(lives2);}
+function updateUI(){scoreEl.textContent=score;levelEl.textContent=level;coinsEl.textContent=coins;livesEl.textContent='♥'.repeat(lives);}
+function updateP2UI(){scoreValP2.textContent=score2;livesValP2.textContent='♥'.repeat(lives2);}
 function loseLife(){
   lives--;updateUI();spawnParticles(player.x,player.y,'#ff0044',40);
   if(lives<=0){gameRunning=false;setTimeout(showGameOver,600);}
@@ -566,9 +566,9 @@ function showWinner(n){
   uiP2.style.display='none';healthBarP2.style.display='none';
   overlay.innerHTML=`
     <h1 style="color:#ffd700;text-shadow:0 0 20px #ffd700">PLAYER ${n} WINS!</h1>
-    <p style="color:#fff;font-size:18px;margin:12px 0">ðŸ† VICTORY!</p>
-    <button class="startBtn" onclick="startGame('versus')">â–¶ PLAY AGAIN</button>
-    <button class="startBtn" style="border-color:#aaa;color:#aaa;margin-top:4px" onclick="goMenu()">ðŸ  MAIN MENU</button>
+    <p style="color:#fff;font-size:18px;margin:12px 0">VICTORY!</p>
+    <button class="startBtn" onclick="startGame('versus')">► PLAY AGAIN</button>
+    <button class="startBtn" style="border-color:#aaa;color:#aaa;margin-top:4px" onclick="goMenu()">MAIN MENU</button>
   `;
   overlay.style.display='flex';
 }
@@ -578,11 +578,11 @@ function showGameOver(){
   overlay.innerHTML=`
     <h1 style="color:#ff4466;text-shadow:0 0 20px #ff4466">GAME OVER</h1>
     <p style="color:#fff;font-size:22px;margin:12px 0">Score: <span style="color:#00ffff">${score}</span></p>
-    <p style="color:#ffd700;font-size:18px;margin-bottom:6px">ðŸª™ Earned: +${coins} coins</p>
-    <p style="color:#88ff88;font-size:14px;margin-bottom:6px">ðŸ¦ Bank: ${totalCoins} coins</p>
+    <p style="color:#ffd700;font-size:18px;margin-bottom:6px">Earned: +${coins} coins</p>
+    <p style="color:#88ff88;font-size:14px;margin-bottom:6px">Bank: ${totalCoins} coins</p>
     <p style="color:#aaa;margin-bottom:20px">Level ${level} reached</p>
-    <button class="startBtn" onclick="startGame('solo')" style="border-color:#ff4466;color:#ff4466;background:rgba(255,0,0,0.1)">â–¶ PLAY AGAIN</button>
-    <button class="startBtn" style="border-color:#aaa;color:#aaa;margin-top:4px" onclick="goMenu()">ðŸ  MAIN MENU</button>
+    <button class="startBtn" onclick="startGame('solo')" style="border-color:#ff4466;color:#ff4466;background:rgba(255,0,0,0.1)">► PLAY AGAIN</button>
+    <button class="startBtn" style="border-color:#aaa;color:#aaa;margin-top:4px" onclick="goMenu()">MAIN MENU</button>
   `;
   overlay.style.display='flex';
 }
