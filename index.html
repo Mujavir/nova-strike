@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOVA STRIKE</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#000;display:flex;align-items:center;justify-content:center;height:100vh;font-family:'Rajdhani',sans-serif;overflow:hidden;user-select:none;}
+#gameWrapper{position:relative;width:480px;height:700px;}
+canvas{display:block;border:2px solid #00ffff;box-shadow:0 0 30px #00ffff55;border-radius:4px;}
+#ui{position:absolute;top:0;left:0;width:100%;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;pointer-events:none;z-index:10;}
+#uiP2{position:absolute;bottom:0;left:0;width:100%;padding:8px 12px;display:none;justify-content:space-between;align-items:center;pointer-events:none;z-index:10;transform:rotate(180deg);}
+.stat{display:flex;flex-direction:column;align-items:center;}
+.stat-label{font-size:9px;color:#00ffff99;letter-spacing:2px;text-transform:uppercase;font-family:'Orbitron',sans-serif;}
+.stat-value{font-size:18px;color:#fff;font-family:'Orbitron',sans-serif;font-weight:700;text-shadow:0 0 10px #00ffff;}
+.p2v{color:#ff8800!important;text-shadow:0 0 10px #ff8800!important;}
+#healthBar{position:absolute;bottom:42px;left:14px;right:14px;height:8px;background:#ffffff22;border-radius:4px;overflow:hidden;}
+#healthFill{height:100%;background:linear-gradient(90deg,#ff4466,#ff0044);border-radius:4px;transition:width 0.2s;box-shadow:0 0 8px #ff0044;}
+#healthBarP2{position:absolute;top:42px;left:14px;right:14px;height:8px;background:#ffffff22;border-radius:4px;overflow:hidden;display:none;}
+#healthFillP2{height:100%;background:linear-gradient(90deg,#ffaa00,#ff8800);border-radius:4px;transition:width 0.2s;box-shadow:0 0 8px #ff8800;}
+#bossBar{position:absolute;top:50px;left:14px;right:14px;height:6px;background:#ffffff22;border-radius:3px;overflow:hidden;display:none;}
+#bossFill{height:100%;background:linear-gradient(90deg,#ff6600,#ff0000);border-radius:3px;box-shadow:0 0 8px #ff6600;}
+#bossLabel{position:absolute;top:44px;left:14px;font-size:11px;color:#ff6600;font-family:'Orbitron',sans-serif;display:none;}
+#pauseBtn{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);z-index:15;background:rgba(0,255,255,0.1);border:2px solid #00ffff88;color:#00ffff;font-family:'Orbitron',sans-serif;font-size:11px;padding:5px 16px;border-radius:4px;cursor:pointer;display:none;}
+#pauseOverlay{position:absolute;top:0;left:0;width:100%;height:100%;display:none;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0.85);z-index:25;gap:14px;}
+#pauseOverlay h2{font-family:'Orbitron',sans-serif;font-size:28px;color:#00ffff;text-shadow:0 0 20px #00ffff;letter-spacing:4px;}
+.pbtn{background:rgba(0,255,255,0.1);border:2px solid #00ffff;color:#00ffff;font-family:'Orbitron',sans-serif;font-size:14px;padding:11px 34px;border-radius:4px;cursor:pointer;letter-spacing:2px;transition:all 0.2s;}
+.pbtn:hover{background:rgba(0,255,255,0.3);box-shadow:0 0 14px #00ffff88;}
+.pbtn.red{border-color:#ff4466;color:#ff4466;background:rgba(255,0,50,0.1);}
+.pbtn.red:hover{background:rgba(255,0,50,0.25);box-shadow:0 0 14px #ff446688;}
+.clrRow{display:flex;align-items:center;gap:5px;flex-wrap:wrap;justify-content:center;max-width:300px;}
+.clrRow label{font-family:'Orbitron',sans-serif;font-size:10px;color:#00ffff99;letter-spacing:1px;width:100%;text-align:center;margin-bottom:2px;}
+.clrDot{width:22px;height:22px;border-radius:50%;border:2px solid #ffffff33;cursor:pointer;transition:all 0.15s;}
+.clrDot:hover,.clrDot.on{border-color:#fff;transform:scale(1.3);box-shadow:0 0 8px #fffa;}
+.clrDot.locked{opacity:0.35;filter:grayscale(50%);}
+.clrDot.locked:hover{opacity:0.7;border-color:#ffd700;transform:scale(1.2);}
+.clrRow{gap:6px 5px;}
+#overlay{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(2,0,18,0.72);z-index:20;backdrop-filter:blur(1px);}
+#overlay h1{font-family:'Orbitron',sans-serif;font-size:40px;color:#00ffff;text-shadow:0 0 20px #00ffff,0 0 40px #00ffff88;letter-spacing:4px;margin-bottom:8px;}
+#overlay p{color:#aaa;font-size:14px;margin-bottom:4px;}
+#overlay .sub{color:#00ffff88;font-size:12px;margin-bottom:18px;}
+.startBtn{background:linear-gradient(135deg,#00ffff22,#0088ff22);border:2px solid #00ffff;color:#00ffff;font-family:'Orbitron',sans-serif;font-size:15px;padding:12px 36px;border-radius:4px;cursor:pointer;letter-spacing:2px;transition:all 0.2s;text-transform:uppercase;margin-bottom:10px;}
+.startBtn:hover{background:linear-gradient(135deg,#00ffff44,#0088ff44);box-shadow:0 0 20px #00ffff66;transform:scale(1.05);}
+.vsBtn{border-color:#ff8800!important;color:#ff8800!important;background:linear-gradient(135deg,#ff880022,#ff440022)!important;}
+.vsBtn:hover{box-shadow:0 0 20px #ff880066!important;}
+#ctrlHint{color:#ffffff44;font-size:11px;text-align:center;line-height:1.9;margin-top:8px;}
+#onscreenControls{position:absolute;bottom:4px;left:0;right:0;display:none;justify-content:space-between;align-items:flex-end;padding:0 10px;z-index:15;pointer-events:none;height:120px;}
+#onscreenControlsP2{position:absolute;top:4px;left:0;right:0;display:none;justify-content:space-between;align-items:flex-start;padding:0 10px;z-index:15;pointer-events:none;height:120px;transform:rotate(180deg);}
+.dpad{position:relative;width:110px;height:110px;pointer-events:none;}
+.dpad-btn{position:absolute;width:36px;height:36px;background:rgba(0,255,255,0.12);border:2px solid #00ffff66;border-radius:8px;color:#00ffff;font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:all;transition:background 0.1s;user-select:none;}
+.dpad-btn:active,.dpad-btn.pr{background:rgba(0,255,255,0.4);box-shadow:0 0 12px #00ffff88;}
+.dpad-btn.p2b{border-color:#ff880066;color:#ff8800;background:rgba(255,136,0,0.12);}
+.dpad-btn.p2b:active,.dpad-btn.p2b.pr{background:rgba(255,136,0,0.4);}
+#dUp{top:0;left:50%;transform:translateX(-50%);}
+#dDown{bottom:0;left:50%;transform:translateX(-50%);}
+#dLeft{left:0;top:50%;transform:translateY(-50%);}
+#dRight{right:0;top:50%;transform:translateY(-50%);}
+#dUp2{top:0;left:50%;transform:translateX(-50%);}
+#dDown2{bottom:0;left:50%;transform:translateX(-50%);}
+#dLeft2{left:0;top:50%;transform:translateY(-50%);}
+#dRight2{right:0;top:50%;transform:translateY(-50%);}
+#fireBtn{width:72px;height:72px;border-radius:50%;background:radial-gradient(circle,#ff446688,#ff004422);border:3px solid #ff4466;color:#ff4466;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:all;transition:all 0.1s;user-select:none;box-shadow:0 0 16px #ff446644;align-self:center;margin-bottom:8px;}
+#fireBtn:active,#fireBtn.pr{background:radial-gradient(circle,#ff4466cc,#ff004488);transform:scale(0.93);}
+#fireBtn2{width:72px;height:72px;border-radius:50%;background:radial-gradient(circle,#ff880088,#ff440022);border:3px solid #ff8800;color:#ff8800;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:all;transition:all 0.1s;user-select:none;box-shadow:0 0 16px #ff880044;align-self:center;margin-bottom:8px;}
+#fireBtn2:active,#fireBtn2.pr{background:radial-gradient(circle,#ff8800cc,#ff440088);transform:scale(0.93);}
+</style>
+</head>
+<body>
+<div id="gameWrapper">
+  <canvas id="c" width="480" height="700"></canvas>
+  <div id="ui">
+    <div class="stat"><div class="stat-label">Score</div><div class="stat-value" id="scoreVal">0</div></div>
+    <div class="stat"><div class="stat-label">Level</div><div class="stat-value" id="levelVal">1</div></div>
+    <div class="stat"><div class="stat-label">Coins</div><div class="stat-value" id="coinsVal">0</div></div>
+    <div class="stat"><div class="stat-label">Lives</div><div class="stat-value" id="livesVal">❤️❤️❤️</div></div>
+  </div>
+  <div id="uiP2">
+    <div class="stat"><div class="stat-label" style="color:#ff880099">P2 Lives</div><div class="stat-value p2v" id="livesValP2">❤️❤️❤️</div></div>
+    <div class="stat"><div class="stat-label" style="color:#ff880099">P2 Score</div><div class="stat-value p2v" id="scoreValP2">0</div></div>
+  </div>
+  <div id="bossLabel">⚠ BOSS</div>
+  <div id="bossBar"><div id="bossFill"></div></div>
+  <div id="healthBar"><div id="healthFill" style="width:100%"></div></div>
+  <div id="healthBarP2"><div id="healthFillP2" style="width:100%"></div></div>
+  <button id="pauseBtn" onclick="togglePause()">⏸ PAUSE</button>
+  <div id="onscreenControls">
+    <div class="dpad">
+      <div class="dpad-btn" id="dUp"    onpointerdown="keys['ArrowUp']=true"    onpointerup="keys['ArrowUp']=false"    onpointerleave="keys['ArrowUp']=false">▲</div>
+      <div class="dpad-btn" id="dDown"  onpointerdown="keys['ArrowDown']=true"  onpointerup="keys['ArrowDown']=false"  onpointerleave="keys['ArrowDown']=false">▼</div>
+      <div class="dpad-btn" id="dLeft"  onpointerdown="keys['ArrowLeft']=true"  onpointerup="keys['ArrowLeft']=false"  onpointerleave="keys['ArrowLeft']=false">◀</div>
+      <div class="dpad-btn" id="dRight" onpointerdown="keys['ArrowRight']=true" onpointerup="keys['ArrowRight']=false" onpointerleave="keys['ArrowRight']=false">▶</div>
+    </div>
+    <div id="fireBtn" onpointerdown="keys[' ']=true" onpointerup="keys[' ']=false" onpointerleave="keys[' ']=false">🔥</div>
+  </div>
+  <div id="onscreenControlsP2">
+    <div class="dpad">
+      <div class="dpad-btn p2b" id="dUp2"    onpointerdown="p2keys['w']=true"    onpointerup="p2keys['w']=false"    onpointerleave="p2keys['w']=false">▲</div>
+      <div class="dpad-btn p2b" id="dDown2"  onpointerdown="p2keys['s']=true"    onpointerup="p2keys['s']=false"    onpointerleave="p2keys['s']=false">▼</div>
+      <div class="dpad-btn p2b" id="dLeft2"  onpointerdown="p2keys['a']=true"    onpointerup="p2keys['a']=false"    onpointerleave="p2keys['a']=false">◀</div>
+      <div class="dpad-btn p2b" id="dRight2" onpointerdown="p2keys['d']=true"    onpointerup="p2keys['d']=false"    onpointerleave="p2keys['d']=false">▶</div>
+    </div>
+    <div id="fireBtn2" onpointerdown="p2keys['f']=true" onpointerup="p2keys['f']=false" onpointerleave="p2keys['f']=false">🔥</div>
+  </div>
+  <div id="pauseOverlay">
+    <h2>⏸ PAUSED</h2>
+    <button class="pbtn" onclick="togglePause()">▶ RESUME</button>
+    <button class="pbtn red" onclick="goMenu()">🏠 MENU</button>
+    <div class="clrRow" id="pColorRow"><label>🪙 COIN COLOR</label></div>
+  </div>
+  <div id="overlay">
+    <h1>NOVA STRIKE</h1>
+    <p>Destroy enemies. Survive the boss. Rule the stars.</p>
+    <div class="sub">Arrow Keys · Space to shoot</div>
+    <button class="startBtn" onclick="startGame('solo')">▶ SOLO PLAY</button>
+    <button class="startBtn vsBtn" onclick="startGame('versus')">👥 VS FRIEND</button>
+    <div class="clrRow" id="mColorRow" style="margin-top:10px"><label>🪙 COIN COLOR</label></div>
+    <div id="ctrlHint">🛡 Blue=Shield | ⚡ Yellow=Rapid | 💣 Red=Triple<br>VS: P1=Arrows+Space | P2=WASD+F</div>
+  </div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>
